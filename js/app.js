@@ -1,12 +1,12 @@
 var app = (function() {
 
-  var authClient;
+  var auth;
 
   function init() {
     document.addEventListener('deviceready', function() {
-      // FirebaseAuthClient demo instantiation
+      // FirebaseSimpleLogin demo instantiation
       var firebaseRef = new Firebase('https://demos.firebaseio.com');
-      authClient = new FirebaseAuthClient(firebaseRef, function(error, user) {
+      auth = new FirebaseSimpleLogin(firebaseRef, function(error, user) {
         if (error) {
           // an error occurred while attempting login
           var message = 'An error occurred.';
@@ -16,9 +16,9 @@ var app = (function() {
           // user authenticated with Firebase
           var message = 'User ID: ' + user.id + ', Provider: ' + user.provider;
           navigator.notification.alert(message, function(){}, 'Success!', 'Close');
-         
+
           // Log out so we can log in again with a different provider.
-          authClient.logout();
+          auth.logout();
 
         } else {
           // user is logged out
@@ -28,8 +28,8 @@ var app = (function() {
   }
 
   function login(provider) {
-    if (authClient) {
-      authClient.login(provider);  
+    if (auth) {
+      auth.login(provider);  
     }
   }
 
